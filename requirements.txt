@@ -1,6 +1,9 @@
+auto_mix_prep==0.2.0
 edge_tts==6.1.12
 Flask==3.0.3
 funasr==1.1.6
+modelscope==1.18.0
+PyJWT==2.9.0
 PyMySQL==1.1.1
 python_bcrypt==0.3.2
 Requests==2.32.3
