@@ -1,0 +1,5 @@
+model/**
+resources/audio/text2audio/file_*
+resources/audio/uploads/file_*
+**/__pycache__
+.DS_Store
