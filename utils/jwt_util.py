@@ -36,6 +36,8 @@ def verify_token(token: str, secret_key: str) -> R:
 
 def get_user_from_token(token: str, secret_key: str) -> User:
     token_payload = verify_token(token, secret_key)
+    if token_payload.param and token_payload.param['adopt'] is False:
+        raise Exception("token解析失败")
     user = token_payload.param['token']['sub']
     user = User(user['uid'], user['uname'], user['sname'], user['uphone'], user['pwd'])
     return user
