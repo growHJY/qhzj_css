@@ -78,7 +78,7 @@ def talk_text():
 @talk_blueprint.route("", methods=["POST"])  # 音频对话
 def talk_audio():  # 音频聊天
     token = request.headers.get("Authorization")
-    talk_id = request.args.get("talk_id")
+    talk_id = request.form.get("talk_id")
     user = get_user_from_token(token, current_app.config["TOKEN_SECRET"])
 
     file = request.files["file"]

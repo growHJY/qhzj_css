@@ -12,8 +12,8 @@ user_blueprint = Blueprint('auth', __name__, url_prefix='/api/user')
 
 @user_blueprint.route('/login', methods=['POST'])  # 登录
 def login():
-    uphone = request.args.get("uphone")
-    pwd = request.args.get("pwd").encode('utf-8')  # 将密码编码为字节
+    uphone = request.form.get("uphone")
+    pwd = request.form.get("pwd").encode('utf-8')  # 将密码编码为字节
 
     mysql = MysqlOperation()
     connect = mysql.connect()
@@ -52,10 +52,10 @@ def login():
 
 @user_blueprint.route('/register', methods=['POST'])  # 注册
 def register():
-    uname = request.args.get("uname")
-    sname = request.args.get("sname")
-    pwd = request.args.get("pwd")
-    uphone = request.args.get("uphone")
+    uname = request.form.get("uname")
+    sname = request.form.get("sname")
+    pwd = request.form.get("pwd")
+    uphone = request.form.get("uphone")
 
     mysql = MysqlOperation()
     connect = mysql.connect()
