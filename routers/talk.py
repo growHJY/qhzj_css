@@ -84,7 +84,6 @@ def talk_audio():  # 音频聊天
     file = request.files["file"]
     ts = str(int(datetime.now().timestamp() * 1000))
     filename = "question_" + ts
-    # filename = file.filename.split(".")[0] + "_" + str(int(datetime.now().timestamp() * 1000))
     upload_path = os.path.join(STATIC_AUDIO_PATH, "uploads", "file_" + user.uphone)
     if not os.path.exists(upload_path):
         os.makedirs(upload_path)
