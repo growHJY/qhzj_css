@@ -1,9 +1,11 @@
 # 资讯模块
 from datetime import datetime
-
 from flask import Blueprint, jsonify, request, current_app
 from src.utils.jwt_util import get_user_from_token
 from src.pojo.information import Information
+from src.utils.mysql_operation import MysqlOperation
+
+import os
 
 information_blueprint = Blueprint('information', __name__, url_prefix="/api/information")
 
@@ -15,7 +17,31 @@ def new_information():
 
 @information_blueprint.route("/cover_img_upload", methods=["POST"])  # 文章封面上传
 def cover_img_upload():
-    pass
+    image_file = request.files['image']
+
+    cover_image_path = os.path.join(os.getcwd(), "resources", "article_image")
+    if not os.path.exists(cover_image_path):
+        os.mkdir(cover_image_path)
+
+    operation = MysqlOperation()
+    conn = operation.connect()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM information ORDER BY aid DESC LIMIT 1;"
+            cursor.execute(sql)
+            res = cursor.fetchone()
+
+            if res is None:
+                image_file.save(os.path.join(cover_image_path, "1.jpg"))
+            else:
+                image_file.save(os.path.join(cover_image_path, str(res[0] + 1) + ".jpg"))
+
+    except Exception as e:
+        print(str(e))
+    finally:
+        operation.disconnect()
+
+    return jsonify({"message": "success"})
 
 
 @information_blueprint.route("/add_information", methods=['POST'])  # 添加资讯
