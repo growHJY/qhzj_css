@@ -16,3 +16,7 @@ def talk_to_ollama(txt) -> str:
     }
     response = requests.post(url=url, json=params)
     return response.json()['response']
+
+
+if __name__ == '__main__':
+    print(talk_to_ollama("你好"))
