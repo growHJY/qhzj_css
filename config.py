@@ -1,5 +1,5 @@
 TOKEN_SECRET = "qhzj_token"
-SERVER_HOST = "http://192.168.10.8:5001"
+SERVER_HOST = "http://192.168.10.11:5001"
 
 MYSQL_HOST = "localhost"
 MYSQL_PORT = 3306
