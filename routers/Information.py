@@ -13,7 +13,23 @@ information_blueprint = Blueprint('information', __name__, url_prefix="/api/info
 
 @information_blueprint.route('/information_list', methods=['GET'])  # 资讯列表
 def new_information():
-    return jsonify({'message': 'Hello World!'})
+    category = request.args.get("category")
+    inf_list = []
+    try:
+        operation = MysqlOperation()
+        conn = operation.connect()
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM information WHERE category = %s"
+            cursor.execute(sql, (category,))
+            res_list = cursor.fetchall()
+            for r in res_list:
+                inf = Information(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7])
+                inf_list.append(inf.to_dict())
+    except Exception as e:
+        return jsonify(R(500, str(e), None).to_dict())
+    finally:
+        operation.disconnect()
+    return jsonify(R(200, "获取成功", inf_list).to_dict())
 
 
 @information_blueprint.route("/cover_img_upload", methods=["POST"])  # 文章封面上传
